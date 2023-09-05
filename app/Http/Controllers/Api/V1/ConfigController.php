@@ -24,7 +24,7 @@ class ConfigController extends Controller
             return response()->json(['errors' => Helpers::error_processor($validator)], 403);
         }
        
-        $response = Http::get('https://maps.googleapis.com/maps/api/geocode/json?latlng='.$request->lat.','.$request->lng.'&key='."AIzaSyAwph5iP61uHokKAovxY2PT3TuvMjJkFzE");
+        $response = Http::get('https://maps.googleapis.com/maps/api/geocode/json?latlng='.$request->lat.','.$request->lng.'&key='.'AIzaSyAwph5iP61uHokKAovxY2PT3TuvMjJkFzE');
         return $response->json();
     }
         public function get_zone(Request $request)
@@ -77,7 +77,7 @@ class ConfigController extends Controller
 
         public function place_api_autocomplete(Request $request)
         {
-            $validator = Validator::make($request-> all(), [
+            $validator = Validator::make($request->all(), [
                 'search_text' => 'required',
             ]);
 
@@ -88,7 +88,26 @@ class ConfigController extends Controller
             }
 
             $response = Http::get(
-                'https://maps.googleapis.com/maps/api/place/autocomplete/json?input='.$request['search_text'].'&key='."AIzaSyAwph5iP61uHokKAovxY2PT3TuvMjJkFzE"
+                'https://maps.googleapis.com/maps/api/place/autocomplete/json?input='.$request['search_text'].'&key='.'AIzaSyAwph5iP61uHokKAovxY2PT3TuvMjJkFzE'
+            );
+
+            return $response->json();
+        }
+
+        public function place_api_details(Request $request)
+        {
+            $validator = Validator::make($request->all(), [
+                'placeid' => 'required',
+            ]);
+
+            if ($validator->errors()->count()>0){
+                return response()->json(
+                    ['errors' => Helpers::error_processor($validator)],
+                    403);
+            }
+
+            $response = Http::get(
+                'https://maps.googleapis.com/maps/api/place/details/json?placeid='.$request['placeid'].'&key='.'AIzaSyAwph5iP61uHokKAovxY2PT3TuvMjJkFzE'
             );
 
             return $response->json();
