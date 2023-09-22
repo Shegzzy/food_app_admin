@@ -14,7 +14,8 @@
         "laravel/framework": "^8.65",
         "laravel/passport": "^10.2",
         "laravel/sanctum": "^2.11",
-        "laravel/tinker": "^2.5"
+        "laravel/tinker": "^2.5",
+        "unicodeveloper/laravel-paystack": "^1.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.7",
